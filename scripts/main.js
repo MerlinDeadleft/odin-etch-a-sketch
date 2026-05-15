@@ -2,14 +2,17 @@ const DEFAULT_GRID_SIZE = 16;
 
 let GRID_SIZE = DEFAULT_GRID_SIZE;
 let randomColor = false;
+let progressiveOpacity = false;
 
 const container = document.querySelector("#container");
 const resizeButton = document.querySelector("#resizeButton");
 const randomColorButton = document.querySelector("#randomColorButton");
+const progressiveOpacityButton = document.querySelector("#progressiveOpacityButton");
 
 //Main
 resizeButton.addEventListener("click", handleResizeButtonClicked);
 randomColorButton.addEventListener("click", handleRandomColorButtonClicked);
+progressiveOpacityButton.addEventListener("click", handleProgressiveOpacityButtonClicked);
 setUpGrid();
 
 //Functions
@@ -35,7 +38,25 @@ function setUpGridItem() {
 }
 
 function handleGridItemMouseEnter(e) {
-    e.target.style.backgroundColor = randomColor ? `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})` : "black";
+    let target = e.target;
+    let r = randomColor ? Math.random() * 255 : 0;
+    let g = randomColor ? Math.random() * 255 : 0;
+    let b = randomColor ? Math.random() * 255 : 0;
+    let a = 1;
+
+    if(progressiveOpacity)
+    {
+        let backgroundColor = getComputedStyle(target).getPropertyValue("background-color");
+        if(backgroundColor.startsWith("rgba")) {
+            let split = backgroundColor.split(",");
+            let opacity = parseFloat(split[split.length - 1].replace(")", ""));
+            opacity += 0.1;
+            a = opacity;
+        }
+        console.log(backgroundColor);
+    }
+
+    target.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${a})`;
 }
 
 function handleResizeButtonClicked() {
@@ -60,4 +81,10 @@ function handleRandomColorButtonClicked() {
     randomColor = !randomColor;
 
     randomColorButton.textContent = `Random Color(${(randomColor ? "On" : "Off")})`;
+}
+
+function handleProgressiveOpacityButtonClicked() {
+    progressiveOpacity = !progressiveOpacity;
+
+    progressiveOpacityButton.textContent = `Progressive Opacity(${(progressiveOpacity ? "On" : "Off")})`;
 }
