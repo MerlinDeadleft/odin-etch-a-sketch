@@ -5,10 +5,10 @@ let randomColor = false;
 let progressiveOpacity = false;
 
 const container = document.querySelector("#container");
-const resizeButton = document.querySelector("#resizeButton");
-const randomColorButton = document.querySelector("#randomColorButton");
-const progressiveOpacityButton = document.querySelector("#progressiveOpacityButton");
-const clearGridButton = document.querySelector("#clearGrid");
+const resizeButton = document.querySelector("#resize-button");
+const randomColorButton = document.querySelector("#random-color-button");
+const progressiveOpacityButton = document.querySelector("#progressive-opacity-button");
+const clearGridButton = document.querySelector("#clear-grid-button");
 
 //Main
 resizeButton.addEventListener("click", handleResizeButtonClicked);
