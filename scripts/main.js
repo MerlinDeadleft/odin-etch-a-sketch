@@ -1,17 +1,18 @@
 const DEFAULT_GRID_SIZE = 16;
 
 let GRID_SIZE = DEFAULT_GRID_SIZE;
+let randomColor = false;
+
 const container = document.querySelector("#container");
 const resizeButton = document.querySelector("#resizeButton");
+const randomColorButton = document.querySelector("#randomColorButton");
 
 //Main
-
+resizeButton.addEventListener("click", handleResizeButtonClicked);
+randomColorButton.addEventListener("click", handleRandomColorButtonClicked);
 setUpGrid();
 
-resizeButton.addEventListener("click", handleResizeButtonClicked);
-
 //Functions
-
 function setUpGrid() {
     let gridItems = [];
     for(let i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
@@ -28,11 +29,13 @@ function setUpGridItem() {
     div.style.width = `${size}px`;
     div.style.height = `${size}px`;
 
-    div.addEventListener("mouseenter", () =>{
-        div.style.backgroundColor = "black";
-    })
+    div.addEventListener("mouseenter", handleGridItemMouseEnter)
 
     return div;
+}
+
+function handleGridItemMouseEnter(e) {
+    e.target.style.backgroundColor = randomColor ? `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})` : "black";
 }
 
 function handleResizeButtonClicked() {
@@ -51,4 +54,10 @@ function handleResizeButtonClicked() {
     GRID_SIZE = newGridSize;
     container.replaceChildren();
     setUpGrid();
+}
+
+function handleRandomColorButtonClicked() {
+    randomColor = !randomColor;
+
+    randomColorButton.textContent = `Random Color(${(randomColor ? "On" : "Off")})`;
 }
