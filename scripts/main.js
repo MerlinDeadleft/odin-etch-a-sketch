@@ -65,8 +65,12 @@ function handleGridItemMouseEnter(e) {
 }
 
 function handleResizeButtonClicked() {
-    let newGridSize = parseInt(prompt("How many square per side big should the grid be? (min: 1, max: 100)", "16"));
+    let promptResult = prompt("How many squares per side big should the grid be? (min: 1, max: 100)", "16");
+    if(promptResult === null) {
+        return;
+    }
     
+    let newGridSize = parseInt(promptResult);
     if(Number.isNaN(newGridSize)) {
         alert("Entered value is not a number!\nPlease enter a valid number! (min: 1, max: 100)");
         return;
