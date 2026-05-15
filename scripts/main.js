@@ -8,20 +8,25 @@ const container = document.querySelector("#container");
 const resizeButton = document.querySelector("#resizeButton");
 const randomColorButton = document.querySelector("#randomColorButton");
 const progressiveOpacityButton = document.querySelector("#progressiveOpacityButton");
+const clearGridButton = document.querySelector("#clearGrid");
 
 //Main
 resizeButton.addEventListener("click", handleResizeButtonClicked);
 randomColorButton.addEventListener("click", handleRandomColorButtonClicked);
 progressiveOpacityButton.addEventListener("click", handleProgressiveOpacityButtonClicked);
+clearGridButton.addEventListener("click", setUpGrid);
 setUpGrid();
 
 //Functions
 function setUpGrid() {
+    container.replaceChildren();
+
     let gridItems = [];
     for(let i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
         div = setUpGridItem();
         gridItems.push(div);
     }
+
     container.append(...gridItems);
 }
 
@@ -73,7 +78,6 @@ function handleResizeButtonClicked() {
     }
 
     GRID_SIZE = newGridSize;
-    container.replaceChildren();
     setUpGrid();
 }
 
